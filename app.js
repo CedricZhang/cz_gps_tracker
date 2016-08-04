@@ -33,6 +33,7 @@ app.use('/upload', require('./routes/upload'));
 app.use('/login', require('./routes/login'));
 // app.use('/users', users);
 app.use('/', checkLogin);
+app.use('/panel',require('./routes/panel'));
 app.use('/', routes);
 
 // catch 404 and forward to error handler

@@ -5,7 +5,8 @@ module.exports = {
 
 
     entry: {
-        login: "./javascript/login/index.js"
+        login: "./javascript/login/index.js",
+        panel: "./javascript/panel/index.js"
         //page2: ["./entry1", "./entry2"]
     },
     output: {
