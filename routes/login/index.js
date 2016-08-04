@@ -9,7 +9,7 @@ var aesjs = require('aes-js');
 var sessionKey = require('../../setting/database').database.sessionKey;
 
 router.get('/', function (req, res) {
-    res.render('login/', {title: 'Express'});
+    res.render('login/', {title: '查看位置记录 登录'});
 });
 router.post('/try', function (req, res) {
     if (req.body && req.body.password) {
