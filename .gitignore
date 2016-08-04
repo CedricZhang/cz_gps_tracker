@@ -1,3 +1,9 @@
+# modules
+node_modules
+
+# webstorm setting
+.idea
+
 # Logs
 logs
 *.log
@@ -83,3 +89,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+setting/database.js
