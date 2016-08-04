@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var uploadPosition = require('../../service/upload_position').uploadPosition;
+var code = require('../../setting/status_code').code;
 /* GET upload page. */
 router.get('/', function(req, res, next) {
     var paras = {
@@ -17,8 +18,8 @@ router.get('/', function(req, res, next) {
         batt:req.query.batt
     };
     var result = uploadPosition.upload(paras);
-    if(result == 0){
-        res.send(0);
+    if(result == code.SUCCESS){
+        res.send(code.SUCCESS);
         console.log(paras)
     }else{
         res.send("ERR:" + result);

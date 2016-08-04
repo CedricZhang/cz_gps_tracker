@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <% include ../public/head.ejs %>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+            <div class="form-login">
+                <h2><p class="text-center">查看位置记录</p></h2>
+                <!--<input type="text" id="userName" class="form-control input-sm chat-input" placeholder="username" />-->
+                </br>
+                <input type="password" id="userPassword" class="form-control input-sm chat-input" placeholder="请输入密码" />
+                </br>
+                <div class="wrapper">
+            <span class="group-btn">
+                <a href="#" class="btn btn-primary btn-block" id="login_button">login <i class="fa fa-sign-in"></i></a>
+            </span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<%include ../public/modal.ejs%>
+<%include ../public/javascript.ejs%>
+<script src="/javascripts/login.bundle.js"></script>
+</body>
+</html>
