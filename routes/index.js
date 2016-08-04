@@ -6,5 +6,6 @@ var router = express.Router();
 router.get('/', function(req, res) {
   res.redirect('/login');
 });
+//asdasdasdasdasdasdasd
 
 module.exports = router;
