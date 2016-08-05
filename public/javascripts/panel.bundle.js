@@ -172,6 +172,7 @@
 	        aveLon = aveLon / pointList.length;
 
 	        var center = new qq.maps.LatLng(aveLat, aveLon);
+	        $("#tx_map").html("");
 	        var map = new qq.maps.Map(document.getElementById('tx_map'), {
 	            center: center,
 	            zoom: 13
