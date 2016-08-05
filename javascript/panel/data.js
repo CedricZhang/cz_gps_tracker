@@ -33,8 +33,9 @@ var Data = (function(){
     var getIpPosition = function(callback){
         var _result = {};
         $.ajax({
-            url:'http://apis.map.qq.com/ws/location/v1/ip?&key=5YIBZ-F322X-G3D4K-ZJLFF-QVGT5-5DBYS',
+            url:'http://apis.map.qq.com/ws/location/v1/ip?&key=5YIBZ-F322X-G3D4K-ZJLFF-QVGT5-5DBYS&output=jsonp',
             type:'GET',
+            dataType:'jsonp',
             success:function(result){
                 if(result){
                     _result = result

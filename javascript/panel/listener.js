@@ -16,6 +16,11 @@ var Listener = (function () {
             },
             function(result){
                 console.log(result);
+                if(result.code == 100){
+                    Dom.drawPoints(result.data.pos)
+                }else{
+                    //TODO 弹出错误莫泰狂
+                }
             })
             
         })
