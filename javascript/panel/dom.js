@@ -71,9 +71,8 @@ var Dom = (function () {
                 console.log(res[i])
                 qq.maps.event.addListener(marker, 'mouseover', function (event) {
                     console.log(event)
-                    info.setContent('<div style="text-align:center;white-space:nowrap;' +
-                        'margin:10px;">' +
-                        "<div>" + event.target.ownData.datetime + "</div><div>" +
+                    info.setContent('<div style="text-align:center;white-space:nowrap; margin:10px;">' +
+                        "<div><p style='color:#900000;font-size: 20px;'>" + event.target.ownData.datetime + "</p></div><div>" +
                         "<b>GPS坐标</b>: " + event.target.ownData.lat + " " + event.target.ownData.lon + "<br/>" +
                         "<b>腾讯坐标</b>: " + event.latLng + "<br/>" +
                         "<b>精度</b>: " + event.target.ownData.acc + " 米 " +

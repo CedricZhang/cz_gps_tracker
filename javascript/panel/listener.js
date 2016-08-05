@@ -17,7 +17,18 @@ var Listener = (function () {
             function(result){
                 console.log(result);
                 if(result.code == 100){
-                    Dom.drawPoints(result.data.pos)
+                    if(result.data.pos.length > 0){
+                        for(var i = 0 ;i<result.data.pos.length;i++){
+                            var utcTime = new Date(result.data.pos[i].datetime);
+                            var tzTime = new Date(utcTime.getTime() + tz*1000*60*60);
+                            result.data.pos[i].datetime = tzTime.getFullYear()+"-"+(tzTime.getMonth()+1)+"-"+tzTime.getMinutes()+" "+tzTime.getHours()+":"+tzTime.getMinutes()+":"+tzTime.getSeconds();
+                        }
+                        Dom.drawPoints(result.data.pos)
+                    }
+                    else{
+                        //TODO 弹出错误莫泰狂
+                    }
+
                 }else{
                     //TODO 弹出错误莫泰狂
                 }
