@@ -81,7 +81,7 @@
 	                        for(var i = 0 ;i<result.data.pos.length;i++){
 	                            var utcTime = new Date(result.data.pos[i].datetime);
 	                            var tzTime = new Date(utcTime.getTime() + tz*1000*60*60);
-	                            result.data.pos[i].datetime = tzTime.getFullYear()+"-"+(tzTime.getMonth()+1)+"-"+tzTime.getMinutes()+" "+tzTime.getHours()+":"+tzTime.getMinutes()+":"+tzTime.getSeconds();
+	                            result.data.pos[i].datetime = tzTime.getFullYear()+"-"+(tzTime.getMonth()+1)+"-"+tzTime.getDay()+" "+tzTime.getHours()+":"+tzTime.getMinutes()+":"+tzTime.getSeconds();
 	                        }
 	                        Dom.drawPoints(result.data.pos)
 	                    }
