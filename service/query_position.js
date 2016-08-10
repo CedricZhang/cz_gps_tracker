@@ -16,7 +16,7 @@ var QueryPosition = (function () {
                 if (!error) {
                     _result =   {code: code.SUCCESS, result: rows}
                 } else {
-                    console.log("Error querying position data .. " + error.toString());
+                    console.error("Error querying position data .. " + error.toString());
                     _result =   {code: code.QUERY_DATA_ERR}
                 }
                 if(callback && typeof callback == 'function'){

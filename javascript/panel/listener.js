@@ -21,7 +21,7 @@ var Listener = (function () {
                         for(var i = 0 ;i<result.data.pos.length;i++){
                             var utcTime = new Date(result.data.pos[i].datetime);
                             var tzTime = new Date(utcTime.getTime() + tz*1000*60*60);
-                            result.data.pos[i].datetime = tzTime.getUTCFullYear()+"-"+(tzTime.getUTCMonth()+1)+"-"+tzTime.getUTCDay()+" "+tzTime.getUTCHours()+":"+tzTime.getUTCMinutes()+":"+tzTime.getUTCSeconds();
+                            result.data.pos[i].datetime = tzTime.getUTCFullYear()+"-"+(tzTime.getUTCMonth()+1)+"-"+tzTime.getUTCDate()+" "+tzTime.getUTCHours()+":"+tzTime.getUTCMinutes()+":"+tzTime.getUTCSeconds();
                         }
                         Dom.drawPoints(result.data.pos)
                     }
