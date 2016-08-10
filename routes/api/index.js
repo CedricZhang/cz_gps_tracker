@@ -9,7 +9,7 @@ var queryPosition = require('../../service/query_position').QueryPosition;
 router.post('/query', function (req, res) {
 
     var formatDatetime = function (date) {
-        return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() +
+        return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() +
             ' ' + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     };
 
