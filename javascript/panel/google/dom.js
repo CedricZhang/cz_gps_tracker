@@ -80,7 +80,7 @@ var Dom = (function () {
                 });
                 directionMarker.setIcon({
                     path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-                    scale: 3,
+                    scale: 5,
                     rotation: pointList[i]['dir'],
                     strokeColor: '#FF0000',
                     strokeOpacity: 0.8,
