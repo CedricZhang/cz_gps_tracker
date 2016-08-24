@@ -47,26 +47,20 @@
 	/**
 	 * Created by Cedric Zhang on 2016/8/5.
 	 */
-	var Listener = __webpack_require__(7).Listener;
+	var Listener = __webpack_require__(1).Listener;
 
-	Listener.init()
+	Listener.init();
 
 /***/ },
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */
+/* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Created by Cedric Zhang on 2016/8/5.
 	 */
 	var Listener = (function () {
-	    var Dom = __webpack_require__(8).Dom;
-	    var Data = __webpack_require__(9).Data;
+	    var Dom = __webpack_require__(2).Dom;
+	    var Data = __webpack_require__(3).Data;
 	    var setSearchListener = function(){
 	        $("#go_search").click(function(){
 	            var tz = $("#time_zone").val();
@@ -89,11 +83,17 @@
 	                        Dom.drawPoints(result.data.pos)
 	                    }
 	                    else{
-	                        //TODO 弹出错误莫泰狂
+	                        Dom.showAlert({
+	                            title:"无数据",
+	                            body:"选定的时间段内没有数据"
+	                        })
 	                    }
 
 	                }else{
-	                    //TODO 弹出错误莫泰狂
+	                    Dom.showAlert({
+	                        title:"查询错误",
+	                        body:"查询错误 错误代码："+result.code+" "+result.info
+	                    })
 	                }
 	            })
 	            
@@ -125,7 +125,7 @@
 	    var init = function () {
 	        initTimepicker();
 	        setSearchListener();
-	        Dom.initTxMap();
+	        Dom.initGoogleMap();
 	    };
 
 	    return {init: init}
@@ -134,27 +134,36 @@
 	exports.Listener = Listener;
 
 /***/ },
-/* 8 */
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Created by Cedric Zhang on 2016/8/5.
 	 */
 	var Dom = (function () {
-	    var Data = __webpack_require__(9).Data;
-	    var initTxMap = function () {
+	    var Data = __webpack_require__(3).Data;
+	    var showAlert = function (message) {
+	        var modal = $('#modal');
+	        modal.find('.modal-dialog').removeClass("modal-sm").removeClass("modal-lg").addClass("modal-sm");
+	        $('#modal_title').html(message.title || '警告');
+	        $('#modal_body').html(message.body || '发生错误');
+	        modal.modal();
+	    };
+	    var initGoogleMap = function () {
 	        var windowHeight = $(window).height();
-	        $("#tx_map").css('height', (windowHeight - 200 > 300 ? windowHeight - 200 : 200) + 'px');
+	        $("#google_map").css('height', (windowHeight - 200 > 300 ? windowHeight - 200 : 200) + 'px');
 	        Data.getIpPosition(function (result) {
 	            if (result && result.status == 0 && result.result && result.result.location) {
-	                var map = new qq.maps.Map(document.getElementById("tx_map"), {
-	                    center: new qq.maps.LatLng(result.result.location.lat, result.result.location.lng),      // 地图的中心地理坐标。
-	                    zoom: 8                                                 // 地图的中心地理坐标。
+	                var map = new google.maps.Map(document.getElementById("google_map"), {
+	                    center: new google.maps.LatLng(result.result.location.lat, result.result.location.lng),      // 地图的中心地理坐标。
+	                    zoom: 10,                                                // 地图的中心地理坐标。
+	                    scaleControl: true
 	                });
 	            } else {
-	                var map = new qq.maps.Map(document.getElementById("tx_map"), {
-	                    center: new qq.maps.LatLng(39.916527, 116.397128),      // 地图的中心地理坐标。
-	                    zoom: 8                                                 // 地图的中心地理坐标。
+	                var map = new google.maps.Map(document.getElementById("google_map"), {
+	                    center: new google.maps.LatLng(38.8997187,-77.0507879),      // 地图的中心地理坐标。
+	                    zoom: 10,                                                 // 地图的中心地理坐标。
+	                    scaleControl: true
 	                });
 	            }
 	        })
@@ -174,72 +183,64 @@
 	        aveLat = aveLat / pointList.length;
 	        aveLon = aveLon / pointList.length;
 
-	        var center = new qq.maps.LatLng(aveLat, aveLon);
-	        $("#tx_map").html("");
-	        var map = new qq.maps.Map(document.getElementById('tx_map'), {
+	        var center = new google.maps.LatLng(aveLat, aveLon);
+	        $("#google_map").html("");
+	        var map = new google.maps.Map(document.getElementById('google_map'), {
 	            center: center,
-	            zoom: 13
+	            zoom: 13,
+	            scaleControl: true
 	        });
-	        var info = new qq.maps.InfoWindow({
+	        var info = new google.maps.InfoWindow({
 	            map: map
 	        });
-
-	        var pureCorList = [];
-	        for (i = 0; i < pointList.length; i++) {
-	            pureCorList.push(new qq.maps.LatLng(pointList[i]['lat'], pointList[i]['lon']))
+	        for(i=0;i<pointList.length;i++){
+	            var marker = new google.maps.Marker({
+	                position: new google.maps.LatLng(pointList[i]['lat'], pointList[i]['lon']),
+	                map: map,
+	                zIndex: 1500,
+	                animation: google.maps.Animation.DROP
+	            });
+	            var circle = new google.maps.Circle({
+	                strokeColor: '#FF0000',
+	                strokeOpacity: 0.8,
+	                strokeWeight: 2,
+	                fillColor: '#FF0000',
+	                fillOpacity: 0.3,
+	                map: map,
+	                center: new google.maps.LatLng(pointList[i]['lat'], pointList[i]['lon']),
+	                radius: pointList[i]['acc']
+	            });
+	            marker.ownData = pointList[i];
+	            google.maps.event.addListener(marker,'mouseover', function (event) {
+	                console.log("!!!", this);
+	                info.setContent('<div style="text-align:center;white-space:nowrap; margin:10px;">' +
+	                    "<div><p style='color:#900000;font-size: 20px;'>" + this.ownData.datetime + "</p></div><div>" +
+	                    "<b>GPS坐标</b>: " + this.ownData.lat + " " + this.ownData.lon + "<br/>" +
+	                    "<b>精度</b>: " + this.ownData.acc + " 米 " +
+	                    "<b>定位方式</b>: " + this.ownData.prov + "<br/>" +
+	                    "<b>速度</b>: " + (this.ownData.prov == 'gps' ? ((this.ownData.spd * 3.6).toFixed(2)) : "N/A") + " km/h " +
+	                    "<b>方向</b>: " + (this.ownData.prov == 'gps' ? this.ownData.dir : "N/A") + "<br/>" +
+	                    "<b>设备电量</b>: " + this.ownData.batt + "%<br/>" +
+	                    "</div>"
+	                    + '</div>');
+	                info.setPosition(this.position);
+	                info.open(map,this);
+	            });
+	            
 	        }
-
-	        qq.maps.convertor.translate(pureCorList, 1, function (res) {
-	            console.log("!!!", res)
-	            for (i = 0; i < res.length; i++) {
-	                var marker = new qq.maps.Marker({
-	                    position: res[i],
-	                    map: map,
-	                    zIndex: 1500
-	                });
-	                var circle = new qq.maps.Circle({
-	                    center: res[i],
-	                    fillColor: new qq.maps.Color(0, 15, 255, 0.3),
-	                    map: map,
-	                    radius: pointList[i]['acc'],
-	                    visible: true,
-	                    zIndex: 1000
-	                });
-
-
-	                marker.ownData = pointList[i];
-	                console.log(res[i])
-	                qq.maps.event.addListener(marker, 'mouseover', function (event) {
-	                    console.log(event)
-	                    info.setContent('<div style="text-align:center;white-space:nowrap; margin:10px;">' +
-	                        "<div><p style='color:#900000;font-size: 20px;'>" + event.target.ownData.datetime + "</p></div><div>" +
-	                        "<b>GPS坐标</b>: " + event.target.ownData.lat + " " + event.target.ownData.lon + "<br/>" +
-	                        "<b>腾讯坐标</b>: " + event.latLng + "<br/>" +
-	                        "<b>精度</b>: " + event.target.ownData.acc + " 米 " +
-	                        "<b>定位方式</b>: " + event.target.ownData.prov + "<br/>" +
-	                        "<b>速度</b>: " + (event.target.ownData.prov == 'gps' ? ((event.target.ownData.spd * 3.6).toFixed(2)) : "N/A") + " km/h " +
-	                        "<b>方向</b>: " + (event.target.ownData.prov == 'gps' ? event.target.ownData.dir : "N/A") + "<br/>" +
-	                        "<b>设备电量</b>: " + event.target.ownData.batt + "%<br/>" +
-	                        "</div>"
-	                        + '</div>');
-	                    info.setPosition(event.latLng);
-	                    info.open();
-	                });
-
-	            }
-	        });
 	    };
 
 	    return {
-	        initTxMap: initTxMap,
-	        drawPoints: drawPoints
+	        initGoogleMap: initGoogleMap,
+	        drawPoints: drawPoints,
+	        showAlert:showAlert
 	    }
 	})();
 
 	exports.Dom = Dom;
 
 /***/ },
-/* 9 */
+/* 3 */
 /***/ function(module, exports) {
 
 	/**

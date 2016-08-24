@@ -47,20 +47,23 @@
 	/**
 	 * Created by Cedric Zhang on 2016/8/4.
 	 */
-	var Listener = __webpack_require__(1).Listener;
+	var Listener = __webpack_require__(4).Listener;
 
 	Listener.init();
 
 /***/ },
-/* 1 */
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Created by Cedric Zhang on 2016/8/4.
 	 */
 	var Listener = (function(){
-	    var Data = __webpack_require__(2).Data;
-	    var Dom = __webpack_require__(3).Dom;
+	    var Data = __webpack_require__(5).Data;
+	    var Dom = __webpack_require__(6).Dom;
 	    var setLoginListener = function(){
 	        $('#login_button').click(function(){
 	            var password = $("#userPassword").val();
@@ -100,7 +103,7 @@
 	exports.Listener = Listener;
 
 /***/ },
-/* 2 */
+/* 5 */
 /***/ function(module, exports) {
 
 	/**
@@ -141,7 +144,7 @@
 	exports.Data = Data;
 
 /***/ },
-/* 3 */
+/* 6 */
 /***/ function(module, exports) {
 
 	/**

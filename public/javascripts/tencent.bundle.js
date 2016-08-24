@@ -47,7 +47,7 @@
 	/**
 	 * Created by Cedric Zhang on 2016/8/5.
 	 */
-	var Listener = __webpack_require__(7).Listener;
+	var Listener = __webpack_require__(10).Listener;
 
 	Listener.init()
 
@@ -58,15 +58,18 @@
 /* 4 */,
 /* 5 */,
 /* 6 */,
-/* 7 */
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Created by Cedric Zhang on 2016/8/5.
 	 */
 	var Listener = (function () {
-	    var Dom = __webpack_require__(8).Dom;
-	    var Data = __webpack_require__(9).Data;
+	    var Dom = __webpack_require__(11).Dom;
+	    var Data = __webpack_require__(12).Data;
 	    var setSearchListener = function(){
 	        $("#go_search").click(function(){
 	            var tz = $("#time_zone").val();
@@ -89,11 +92,17 @@
 	                        Dom.drawPoints(result.data.pos)
 	                    }
 	                    else{
-	                        //TODO 弹出错误莫泰狂
+	                        Dom.showAlert({
+	                            title:"无数据",
+	                            body:"选定的时间段内没有数据"
+	                        })
 	                    }
 
 	                }else{
-	                    //TODO 弹出错误莫泰狂
+	                    Dom.showAlert({
+	                        title:"查询错误",
+	                        body:"查询错误 错误代码："+result.code+" "+result.info
+	                    })
 	                }
 	            })
 	            
@@ -101,25 +110,35 @@
 	    };
 
 	    var initTimepicker = function () {
+	        $.fn.datetimepicker.dates['zzb'] = {
+	            days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+	            daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+	            daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+	            months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+	            monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+	            today: "Now"
+	        };
 	        $("#from_form_datetime").datetimepicker({
 	            format: "yyyy-mm-dd hh:ii",
 	            autoclose: true,
-	            todayBtn: true,
+	            todayBtn: 'link',
 	            todayHighlight: true,
 	            initialDate: new Date(new Date().getTime() - 1000 * 60 * 60 * 24),
 	            pickerPosition: "bottom-left",
 	            weekStart: 1,
 	            endDate:new Date()
+	            //language:"zzb"
 	        });
 	        $("#to_form_datetime").datetimepicker({
 	            format: "yyyy-mm-dd hh:ii",
 	            autoclose: true,
-	            todayBtn: true,
+	            todayBtn: 'link',
 	            todayHighlight: true,
 	            initialDate: new Date(),
 	            pickerPosition: "bottom-left",
 	            weekStart: 1,
 	            endDate:new Date()
+	            //language:"zzb"
 	        });
 	    };
 	    var init = function () {
@@ -134,14 +153,21 @@
 	exports.Listener = Listener;
 
 /***/ },
-/* 8 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Created by Cedric Zhang on 2016/8/5.
 	 */
 	var Dom = (function () {
-	    var Data = __webpack_require__(9).Data;
+	    var Data = __webpack_require__(12).Data;
+	    var showAlert = function (message) {
+	        var modal = $('#modal');
+	        modal.find('.modal-dialog').removeClass("modal-sm").removeClass("modal-lg").addClass("modal-sm");
+	        $('#modal_title').html(message.title || '警告');
+	        $('#modal_body').html(message.body || '发生错误');
+	        modal.modal();
+	    };
 	    var initTxMap = function () {
 	        var windowHeight = $(window).height();
 	        $("#tx_map").css('height', (windowHeight - 200 > 300 ? windowHeight - 200 : 200) + 'px');
@@ -232,14 +258,15 @@
 
 	    return {
 	        initTxMap: initTxMap,
-	        drawPoints: drawPoints
+	        drawPoints: drawPoints,
+	        showAlert: showAlert
 	    }
 	})();
 
 	exports.Dom = Dom;
 
 /***/ },
-/* 9 */
+/* 12 */
 /***/ function(module, exports) {
 
 	/**

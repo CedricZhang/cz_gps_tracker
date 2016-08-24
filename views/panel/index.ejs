@@ -8,70 +8,28 @@
 </head>
 
 <body>
-<div class='container'>
-    <div class="row">
-        <nav class="navbar navbar-default" role="navigation">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">查看位置记录</a>
-            </div>
-            <div>
-                <ul class="nav navbar-nav">
-                    <!--<li><a href="#">初始化数据</a></li>-->
-                    <!--<li><a href="#">课堂点名</a></li>-->
-                    <li class="active"><a href="#">腾讯地图</a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div  class="form-horizontal">
-                <fieldset>
-                    <div class="col-xs-3 form-group">
-                        <label for="time_zone" class='col-xs-4 control-label'>时区</label>
-                        <div class="col-xs-8">
-                            <select class="form-control" id="time_zone" readonly>
-                                <option value="0">UTC</option>
-                                <option value="8">北京时间 UTC+8</option>
-                                <option value="-5">美国东部时间 UTC-5</option>
-                                <!--<option>COMP130003.02 测试课程3</option>-->
-                                <!--<option>COMP130004.02 测试课程4</option>-->
-                            </select>
-                        </div>
-
-                    </div>
-                    <div class="col-xs-4 form-group">
-                        <label for="from_datetime" class="col-xs-3 control-label">开始时间</label>
-                        <div class="input-group date form_datetime col-xs-9" id='from_form_datetime' data-date="" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
-                            <input id ='from_datetime' class="form-control" size="16" type="text" value="" readonly>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                        </div>
-                        <!--<input type="hidden" id="dtp_input1" value="" /><br/>-->
-                    </div>
-                    <div class="col-xs-4 form-group">
-                        <label for="to_datetime" class="col-xs-3 control-label">结束时间</label>
-                        <div class="input-group date form_datetime col-xs-9" id='to_form_datetime' data-date="" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
-                            <input id ='to_datetime' class="form-control" size="16" type="text" value="" readonly>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                        </div>
-                        <!--<input type="hidden" id="dtp_input1" value="" /><br/>-->
-                    </div>
-                    <div class="col-xs-1">
-                        <button type="submit" class="btn btn-success" id="go_search">查询</button>
-                    </div>
-                </fieldset>
-            </div>
-        </div>
-
-    </div>
-    <div class="row" style="margin-top: 20px">
-        <div class="col-xs-8" id="tx_map" ></div>
-        <div class="col-xs-4" id="datatable"></div>
-    </div>
-</div>
-<% include ../public/modal.ejs %>
+<h3>
+    正在根据网络情况自动选择地图……
+</h3>
 <% include ../public/javascript.ejs %>
 <script src="/extention/timepicker/bootstrap-datetimepicker.min.js"></script>
 <script src="/javascripts/panel.bundle.js"></script>
+<script>
+    function ping(){
+        $.ajax({
+            url: 'https://maps.googleapis.com/maps/api/js',
+            timeout: 3000,
+            cache: false,
+            //dataType: 'jsonp',
+            success: function(result){
+                location.replace("/panel/google")
+            },
+            error: function(result){
+                location.replace('/panel/tencent');
+            }
+        });
+    }
+    ping();
+</script>
 </body>
 </html>

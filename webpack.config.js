@@ -6,7 +6,9 @@ module.exports = {
 
     entry: {
         login: "./javascript/login/index.js",
-        panel: "./javascript/panel/index.js"
+        panel: "./javascript/panel/index.js",
+        google:"./javascript/panel/google/index.js",
+        tencent:"./javascript/panel/tencent/index.js"
         //page2: ["./entry1", "./entry2"]
     },
     output: {
