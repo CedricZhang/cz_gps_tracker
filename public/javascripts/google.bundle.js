@@ -211,6 +211,7 @@
 	                radius: pointList[i]['acc']
 	            });
 	            if(pointList[i]['prov'] =='gps' && pointList[i]['spd'] > 0){
+	                console.log("HAHAHA")
 	                var directionMarker = new google.maps.Marker({
 	                    position:   new google.maps.LatLng(pointList[i]['lat'], pointList[i]['lon']),
 	                    map:        map,
@@ -225,7 +226,6 @@
 	            }
 	            marker.ownData = pointList[i];
 	            google.maps.event.addListener(marker,'mouseover', function (event) {
-	                console.log("!!!", this);
 	                info.setContent('<div style="text-align:center;white-space:nowrap; margin:10px;">' +
 	                    "<div><p style='color:#900000;font-size: 20px;'>" + this.ownData.datetime + "</p></div><div>" +
 	                    "<b>GPS坐标</b>: " + this.ownData.lat + " " + this.ownData.lon + "<br/>" +
