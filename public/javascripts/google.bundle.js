@@ -210,6 +210,19 @@
 	                center: new google.maps.LatLng(pointList[i]['lat'], pointList[i]['lon']),
 	                radius: pointList[i]['acc']
 	            });
+	            if(pointList[i]['prov'] =='gps' && pointList[i]['spd'] > 0){
+	                var directionMarker = new google.maps.Marker({
+	                    position:   new google.maps.LatLng(pointList[i]['lat'], pointList[i]['lon']),
+	                    map:        map,
+	                    draggable:  false,
+	                    title:      "test"
+	                });
+	                directionMarker.setIcon({
+	                    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+	                    scale: 6,
+	                    rotation: pointList[i]['dir']
+	                });
+	            }
 	            marker.ownData = pointList[i];
 	            google.maps.event.addListener(marker,'mouseover', function (event) {
 	                console.log("!!!", this);
