@@ -211,7 +211,6 @@
 	                radius: pointList[i]['acc']
 	            });
 	            if(pointList[i]['prov'] =='gps' && pointList[i]['spd'] > 0){
-	                console.log("HAHAHA")
 	                var directionMarker = new google.maps.Marker({
 	                    position:   new google.maps.LatLng(pointList[i]['lat'], pointList[i]['lon']),
 	                    map:        map,
@@ -220,8 +219,11 @@
 	                });
 	                directionMarker.setIcon({
 	                    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-	                    scale: 6,
-	                    rotation: pointList[i]['dir']
+	                    scale: 3,
+	                    rotation: pointList[i]['dir'],
+	                    strokeColor: '#FF0000',
+	                    strokeOpacity: 0.8,
+	                    strokeWeight: 1
 	                });
 	            }
 	            marker.ownData = pointList[i];
