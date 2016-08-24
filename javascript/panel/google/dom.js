@@ -79,8 +79,8 @@ var Dom = (function () {
                     title:      "test"
                 });
                 directionMarker.setIcon({
-                    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-                    scale: 5,
+                    path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+                    scale: 8,
                     rotation: pointList[i]['dir'],
                     strokeColor: '#FF0000',
                     strokeOpacity: 0.8,
