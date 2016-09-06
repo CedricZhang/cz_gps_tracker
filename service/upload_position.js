@@ -16,6 +16,7 @@ var uploadPosition = (function () {
             (paras.dir || 0 ) + ",'" +
             (paras.prov || 'N/A') + "'," +
             (paras.batt || 0 ) +  ");";
+        console.info(sql);
         conn.query(sql, function (error, rows, fields) {
             if (!error) {
                 return code.SUCCESS
