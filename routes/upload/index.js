@@ -8,7 +8,7 @@ var code = require('../../setting/status_code').code;
 /* GET upload page. */
 router.get('/', function(req, res, next) {
     var paras = {
-        datetime:new Date(req.query.time || 0).getTime(),
+        datetime:new Date(req.query.time || 0),
         lat:req.query.lat || 0,
         lon:req.query.lon,
         acc:req.query.acc,
