@@ -8,7 +8,7 @@ var uploadPosition = (function () {
     var upload = function (paras) {
         var sql = "INSERT INTO `gpslogger`.`records` " +
             "(`datetime`, `lat`, `lon`, `acc`, `spd`, `dir`, `prov`, `batt`)" +
-            " VALUES (DATE('" + (paras.datetime || 0) + "')," +
+            " VALUES (FROM_UNIXTIME('" + (paras.datetime || 0) + "')," +
             (paras.lat || 0 ) + "," +
             (paras.lon || 0 ) + "," +
             (paras.acc || 0 ) + "," +
